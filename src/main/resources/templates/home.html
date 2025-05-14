@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hari Farms - Premium Poultry Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<!-- Header -->
+<div th:replace="~{fragments/layout :: header}"></div>
+
+<!-- Hero Section -->
+<section class="hero-section position-relative">
+    <div class="hero-image" style="background-image: url('https://images.pexels.com/photos/7752839/pexels-photo-7752839.jpeg'); height: 500px; background-position: center; background-size: cover;">
+        <div class="hero-overlay position-absolute w-100 h-100 bg-dark" style="opacity: 0.5;"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-md-8 text-white position-relative">
+                    <h1 class="display-4 fw-bold mb-4">Premium Quality Hens from Hari Farms</h1>
+                    <p class="lead mb-4">Ethically raised, healthy, and productive hens for your home or farm. Direct from our farm to your doorstep.</p>
+                    <a href="#featured-products" class="btn btn-success btn-lg">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4">
+                    <div class="text-center mb-3">
+                        <i class="bi bi-award text-success" style="font-size: 3rem;"></i>
+                    </div>
+                    <h3 class="h4">Premium Quality</h3>
+                    <p class="text-muted">Our hens are raised with care, ensuring health, productivity, and longevity.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4">
+                    <div class="text-center mb-3">
+                        <i class="bi bi-truck text-success" style="font-size: 3rem;"></i>
+                    </div>
+                    <h3 class="h4">Fast Delivery</h3>
+                    <p class="text-muted">Safe and secure delivery to your doorstep with special care for the well-being of the birds.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100 text-center p-4">
+                    <div class="text-center mb-3">
+                        <i class="bi bi-shield-check text-success" style="font-size: 3rem;"></i>
+                    </div>
+                    <h3 class="h4">Satisfaction Guaranteed</h3>
+                    <p class="text-muted">We guarantee the health and quality of our hens with after-sales support.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section id="featured-products" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Hens</h2>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6" th:each="product : ${featuredProducts}" th:if="${productStat.index < 4}">
+                <div class="card h-100 product-card shadow-sm border-0 position-relative">
+                    <span class="badge bg-success position-absolute top-0 end-0 m-2">In Stock</span>
+                    <img th:src="${product.imageUrl}" class="card-img-top" style="height: 200px; object-fit: cover;" th:alt="${product.name}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${product.name}">Hen Name</h5>
+                        <div class="mb-2">
+                            <span class="fw-bold text-success" th:text="'₹' + ${product.price}">₹450.00</span>
+                        </div>
+                        <p class="card-text" th:text="${#strings.abbreviate(product.description, 100)}">Description</p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center">
+                        <a th:href="@{/products/{id}(id=${product.id})}" class="btn btn-outline-secondary">View Details</a>
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a th:href="@{/products}" class="btn btn-outline-success btn-lg">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Shop by Category</h2>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card border-0 shadow-sm h-100 category-card overflow-hidden">
+                    <img src="https://images.pexels.com/photos/2255564/pexels-photo-2255564.jpeg" class="card-img-top category-img" alt="Egg Layers">
+                    <div class="card-body text-center">
+                        <h3 class="h4">Egg Layers</h3>
+                        <p class="text-muted">High egg-producing breeds for consistent yields</p>
+                        <a th:href="@{/products/category/Egg Layers}" class="btn btn-outline-success">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card border-0 shadow-sm h-100 category-card overflow-hidden">
+                    <img src="https://images.pexels.com/photos/5528990/pexels-photo-5528990.jpeg" class="card-img-top category-img" alt="Meat Purpose">
+                    <div class="card-body text-center">
+                        <h3 class="h4">Meat Purpose</h3>
+                        <p class="text-muted">Fast-growing breeds with excellent meat quality</p>
+                        <a th:href="@{/products/category/Meat Purpose}" class="btn btn-outline-success">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card border-0 shadow-sm h-100 category-card overflow-hidden">
+                    <img src="https://images.pexels.com/photos/7706440/pexels-photo-7706440.jpeg" class="card-img-top category-img" alt="Dual Purpose">
+                    <div class="card-body text-center">
+                        <h3 class="h4">Dual Purpose</h3>
+                        <p class="text-muted">Versatile breeds for both egg and meat production</p>
+                        <a th:href="@{/products/category/Dual Purpose}" class="btn btn-outline-success">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card border-0 shadow-sm h-100 category-card overflow-hidden">
+                    <img src="https://images.pexels.com/photos/7706446/pexels-photo-7706446.jpeg" class="card-img-top category-img" alt="Premium Breeds">
+                    <div class="card-body text-center">
+                        <h3 class="h4">Premium Breeds</h3>
+                        <p class="text-muted">Specialty and exotic breeds for collectors</p>
+                        <a th:href="@{/products/category/Premium Breeds}" class="btn btn-outline-success">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Customers Say</h2>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm p-4 h-100">
+                    <div class="mb-3">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                    </div>
+                    <p class="card-text">"I purchased White Leghorns from Hari Farms and they've been excellent egg producers. Healthy birds with great temperament. Would definitely buy again!"</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <span>RK</span>
+                        </div>
+                        <div class="ms-3">
+                            <h5 class="mb-0">Ramesh Kumar</h5>
+                            <small class="text-muted">Chennai</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm p-4 h-100">
+                    <div class="mb-3">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star text-warning"></i>
+                    </div>
+                    <p class="card-text">"The delivery was smooth and the birds arrived in great condition. The Rhode Island Reds I ordered are growing well and starting to lay eggs consistently. Very satisfied."</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <span>SP</span>
+                        </div>
+                        <div class="ms-3">
+                            <h5 class="mb-0">Srinivas Patel</h5>
+                            <small class="text-muted">Hyderabad</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm p-4 h-100">
+                    <div class="mb-3">
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-half text-warning"></i>
+                    </div>
+                    <p class="card-text">"I've been buying from Hari Farms for my small poultry business for over a year now. Their Kadaknath breed has been particularly popular with my customers. Great quality and service!"</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <span>AD</span>
+                        </div>
+                        <div class="ms-3">
+                            <h5 class="mb-0">Anjali Desai</h5>
+                            <small class="text-muted">Pune</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <img src="https://images.pexels.com/photos/2255459/pexels-photo-2255459.jpeg" alt="Hari Farms Facility" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-md-6">
+                <h2 class="mb-4">Why Choose Hari Farms?</h2>
+                <div class="mb-4">
+                    <h4 class="d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Ethical Farming Practices
+                    </h4>
+                    <p>Our hens are raised in spacious, clean environments with access to outdoor areas, ensuring their health and natural behavior.</p>
+                </div>
+                <div class="mb-4">
+                    <h4 class="d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Veterinary Care
+                    </h4>
+                    <p>Regular health check-ups and vaccinations ensure our birds are disease-free and in optimal health.</p>
+                </div>
+                <div class="mb-4">
+                    <h4 class="d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Quality Feed
+                    </h4>
+                    <p>Our hens are fed natural, balanced diets without unnecessary antibiotics or growth hormones.</p>
+                </div>
+                <div>
+                    <h4 class="d-flex align-items-center">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Expert Guidance
+                    </h4>
+                    <p>Our team provides ongoing support and advice for your poultry-keeping journey, even after purchase.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-success text-white">
+    <div class="container text-center">
+        <h2 class="mb-4">Ready to start your poultry journey?</h2>
+        <p class="lead mb-4">Browse our collection of premium hens and find the perfect match for your needs.</p>
+        <a th:href="@{/products}" class="btn btn-light btn-lg">Shop Now</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<!-- JavaScript Bundle -->
+<div th:replace="~{fragments/layout :: scripts}"></div>
+
+<script>
+    // Add animations for product cards
+    document.addEventListener('DOMContentLoaded', function() {
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // Animation for category cards
+        const categoryCards = document.querySelectorAll('.category-card');
+        categoryCards.forEach(card => {
+            const img = card.querySelector('.category-img');
+            card.addEventListener('mouseenter', function() {
+                img.style.transform = 'scale(1.1)';
+                img.style.transition = 'transform 0.5s ease';
+            });
+            card.addEventListener('mouseleave', function() {
+                img.style.transform = 'scale(1)';
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

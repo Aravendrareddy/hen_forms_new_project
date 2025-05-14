@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: harifarms-role-binding
+  namespace: harifarms
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: harifarms
+roleRef:
+  kind: Role
+  name: harifarms-role
+  apiGroup: rbac.authorization.k8s.io

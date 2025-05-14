@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harifarms-config
+  namespace: harifarms
+data:
+  application.properties: |
+    spring.application.name=Hari Farms
+    server.port=8080
+    
+    # Database Configuration
+    spring.datasource.url=jdbc:postgresql://postgres:5432/harifarms
+    spring.datasource.driver-class-name=org.postgresql.Driver
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+    
+    # Redis Configuration
+    spring.session.store-type=redis
+    spring.redis.host=redis
+    spring.redis.port=6379
+    
+    # Logging
+    logging.level.org.springframework=INFO
+    logging.level.com.harifarms=DEBUG
+    
+    # Security
+    spring.security.user.name=${ADMIN_USERNAME:admin}
+    spring.security.user.password=${ADMIN_PASSWORD:admin}
+    
+    # File Upload
+    spring.servlet.multipart.max-file-size=10MB
+    spring.servlet.multipart.max-request-size=10MB
